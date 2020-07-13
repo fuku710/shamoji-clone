@@ -32,8 +32,16 @@ class EmojiModel(db.Model):
         return cls.query.all()
 
     @classmethod
+    def find_by_name(cls, _id):
+        return cls.query.filter_by(id=_id).first()
+
+    @classmethod
     def find_by_name(cls, name):
         return cls.query.filter_by(name=name).first()
+
+    @classmethod
+    def find_by_id_and_user_id(cls, _id, user_id):
+        return cls.query.filter_by(id=_id, user_id=user_id).first()
 
     @classmethod
     def find_by_name_and_user_id(cls, name, user_id):

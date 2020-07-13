@@ -8,22 +8,23 @@ class Emoji(Resource):
     parser.add_argument('name')
     parser.add_argument('image_base64')
 
-    def get(self, name):
-        emoji = EmojiModel.find_by_name(name)
+    def get(self, _id):
+        emoji = EmojiModel.find_by_id(_id)
         if emoji is None:
             return {'messsage': 'Emoji is not found'}, 404
         return emoji.json(), 200
 
     @jwt_required()
-    def patch(self, name):
+    def patch(self, _id):
         data = Emoji.parser.parse_args()
         user = current_identity
-        emoji = EmojiModel.find_by_name_and_user_id(name=name, user_id=user.id)
+        emoji = EmojiModel.find_by_id_and_user_id(id=_id, user_id=user.id)
 
         if emoji is None:
             return {"message": "Emoji is not found"}, 404
 
-        emoji.image_base64 = data["image_base64"]
+        emoji.name = data['name'] if data['name']
+        emoji.image_base64 = data["image_base64"] if data['image_base64']
         try:
             emoji.save()
         except:
@@ -32,9 +33,9 @@ class Emoji(Resource):
         return emoji.json(), 200
 
     @jwt_required()
-    def delete(self, name):
+    def delete(self, _id):
         user = current_identity
-        emoji = EmojiModel.find_by_name_and_user_id(name=name, user_id=user.id)
+        emoji = EmojiModel.find_by_id_and_user_id(id=_id, user_id=user.id)
 
         if emoji is None:
             return {"message": "Emoji is not found"}, 404
@@ -47,7 +48,7 @@ class Emoji(Resource):
         return {"message": "Success to delete emoji"}, 200
 
 
-class EmojiList(Resource):
+class Emojis(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('name')
     parser.add_argument('image_base64')

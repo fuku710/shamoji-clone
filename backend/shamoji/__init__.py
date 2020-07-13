@@ -5,7 +5,7 @@ from datetime import timedelta
 
 from shamoji.db import db, init_db_command
 from shamoji.auth import authenticate, identity
-from shamoji.resources.emoji import Emoji, EmojiList
+from shamoji.resources.emoji import Emoji, Emojis
 from shamoji.resources.user import UserRegister
 
 
@@ -20,8 +20,8 @@ def create_app():
     jwt = JWT(app, authenticate, identity)
 
     api = Api(app)
-    api.add_resource(Emoji, '/emoji/<string:name>')
-    api.add_resource(EmojiList, '/emojis')
+    api.add_resource(Emoji, '/emoji/<number:_id>')
+    api.add_resource(Emojis, '/emojis')
     api.add_resource(UserRegister, '/register')
 
     app.cli.add_command(init_db_command)
