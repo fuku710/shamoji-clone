@@ -15,20 +15,6 @@ class Emoji(Resource):
         return emoji.json(), 200
 
     @jwt_required()
-    def post(self, name):
-        data = Emoji.parser.parse_args()
-        user = current_identity
-        emoji = EmojiModel(
-            name=name, image_base64=data["image_base64"], user_id=user.id)
-
-        try:
-            emoji.save()
-        except:
-            return {"message": "Failed to insert emoji"}, 500
-
-        return emoji.json(), 201
-
-    @jwt_required()
     def patch(self, name):
         data = Emoji.parser.parse_args()
         user = current_identity
@@ -62,6 +48,24 @@ class Emoji(Resource):
 
 
 class EmojiList(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('name')
+    parser.add_argument('image_base64')
+
     def get(self):
         emojis = EmojiModel.all()
         return {'emojis': list(map(lambda emoji: emoji.json(), emojis))}, 200
+
+    @jwt_required()
+    def post(self):
+        data = Emoji.parser.parse_args()
+        user = current_identity
+        emoji = EmojiModel(
+            name=data['name'], image_base64=data["image_base64"], user_id=user.id)
+
+        try:
+            emoji.save()
+        except:
+            return {"message": "Failed to insert emoji"}, 500
+
+        return emoji.json(), 201
