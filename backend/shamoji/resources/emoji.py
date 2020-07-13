@@ -5,13 +5,13 @@ from shamoji.models.emoji import EmojiModel
 
 class Emoji(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('name')
-    parser.add_argument('image_base64')
+    parser.add_argument("name")
+    parser.add_argument("image_base64")
 
     def get(self, _id):
         emoji = EmojiModel.find_by_id(_id)
         if emoji is None:
-            return {'messsage': 'Emoji is not found'}, 404
+            return {"messsage": "Emoji is not found"}, 404
         return emoji.json(), 200
 
     @jwt_required()
@@ -23,8 +23,11 @@ class Emoji(Resource):
         if emoji is None:
             return {"message": "Emoji is not found"}, 404
 
-        emoji.name = data['name'] if data['name']
-        emoji.image_base64 = data["image_base64"] if data['image_base64']
+        if data["name"]:
+            emoji.name = data["name"]
+        if data["image_base64"]:
+            emoji.image_base64 = data["image_base64"]
+
         try:
             emoji.save()
         except:
@@ -50,19 +53,20 @@ class Emoji(Resource):
 
 class Emojis(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('name')
-    parser.add_argument('image_base64')
+    parser.add_argument("name")
+    parser.add_argument("image_base64")
 
     def get(self):
         emojis = EmojiModel.all()
-        return {'emojis': list(map(lambda emoji: emoji.json(), emojis))}, 200
+        return {"emojis": list(map(lambda emoji: emoji.json(), emojis))}, 200
 
     @jwt_required()
     def post(self):
         data = Emoji.parser.parse_args()
         user = current_identity
         emoji = EmojiModel(
-            name=data['name'], image_base64=data["image_base64"], user_id=user.id)
+            name=data["name"], image_base64=data["image_base64"], user_id=user.id
+        )
 
         try:
             emoji.save()

@@ -2,14 +2,14 @@ from shamoji.db import db
 
 
 class EmojiModel(db.Model):
-    __tablename__ = 'emojis'
+    __tablename__ = "emojis"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True, nullable=False)
     image_base64 = db.Column(db.String, nullable=False)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    user = db.relationship('UserModel')
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user = db.relationship("UserModel")
 
     def __init__(self, name, user_id, image_base64):
         self.name = name
@@ -17,7 +17,11 @@ class EmojiModel(db.Model):
         self.user_id = user_id
 
     def json(self):
-        return {'name': self.name, 'image_base64': self.image_base64, 'user': self.user.username}
+        return {
+            "name": self.name,
+            "image_base64": self.image_base64,
+            "user": self.user.username,
+        }
 
     def save(self):
         db.session.add(self)

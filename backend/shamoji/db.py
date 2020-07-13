@@ -4,9 +4,10 @@ import click
 
 db = SQLAlchemy()
 
-@click.command('init-db')
+
+@click.command("init-db")
 @with_appcontext
 def init_db_command():
-    '''Initialize the database'''
+    """Initialize the database"""
     db.create_all()
-    click.echo('Initilized the database')
+    click.echo("Initilized the database")

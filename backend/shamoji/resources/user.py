@@ -4,11 +4,11 @@ from shamoji.models.user import UserModel
 
 class Emoji(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('name', required=True)
+    parser.add_argument("name", required=True)
 
     def get(self):
         emojis = EmojiModel.all()
-        return {'emojis': list(map(lambda emoji: emoji.json(), emojis))}
+        return {"emojis": list(map(lambda emoji: emoji.json(), emojis))}
 
     def post(self):
         data = Emoji.parser.parse_args()
@@ -24,8 +24,8 @@ class Emoji(Resource):
 
 class UserRegister(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('username', required=True)
-    parser.add_argument('password', required=True)
+    parser.add_argument("username", required=True)
+    parser.add_argument("password", required=True)
 
     def post(self):
         data = UserRegister.parser.parse_args()
