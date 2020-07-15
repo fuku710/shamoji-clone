@@ -18,7 +18,7 @@ class Emoji(Resource):
     def patch(self, _id):
         data = Emoji.parser.parse_args()
         user = current_identity
-        emoji = EmojiModel.find_by_id_and_user_id(id=_id, user_id=user.id)
+        emoji = EmojiModel.find_by_id_and_user_id(_id=_id, user_id=user.id)
 
         if emoji is None:
             return {"message": "Emoji is not found"}, 404
@@ -38,7 +38,7 @@ class Emoji(Resource):
     @jwt_required()
     def delete(self, _id):
         user = current_identity
-        emoji = EmojiModel.find_by_id_and_user_id(id=_id, user_id=user.id)
+        emoji = EmojiModel.find_by_id_and_user_id(_id=_id, user_id=user.id)
 
         if emoji is None:
             return {"message": "Emoji is not found"}, 404
