@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt import JWT
+from flask_cors import CORS
 from datetime import timedelta
 
 from shamoji.auth import authenticate, identity
@@ -17,6 +18,8 @@ def create_app():
     app.config["SECRET_KEY"] = "secret"
 
     jwt = JWT(app, authenticate, identity)
+
+    cors = CORS(app)
 
     @app.route("/")
     def index():

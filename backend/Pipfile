@@ -12,6 +12,7 @@ Flask-SQLAlchemy = "*"
 flask-jwt = "*"
 black = "*"
 pytest = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.6"
