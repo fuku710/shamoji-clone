@@ -11,6 +11,7 @@ Flask-RESTful = "*"
 Flask-SQLAlchemy = "*"
 flask-jwt = "*"
 black = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.6"

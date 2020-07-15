@@ -1,9 +1,8 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt import JWT
 from datetime import timedelta
 
-from shamoji.db import db, init_db_command
 from shamoji.auth import authenticate, identity
 from shamoji.resources.emoji import Emoji, Emojis
 from shamoji.resources.user import UserRegister
@@ -19,13 +18,18 @@ def create_app():
 
     jwt = JWT(app, authenticate, identity)
 
+    @app.route("/")
+    def index():
+        return jsonify({"message": "shamoji api"})
+
     api = Api(app)
-    api.add_resource(Emoji, "/emoji/<number:_id>")
+    api.add_resource(Emoji, "/emoji/<int:_id>")
     api.add_resource(Emojis, "/emojis")
     api.add_resource(UserRegister, "/register")
 
-    app.cli.add_command(init_db_command)
+    from shamoji.db import db, init_db_command
 
     db.init_app(app)
+    app.cli.add_command(init_db_command)
 
     return app
