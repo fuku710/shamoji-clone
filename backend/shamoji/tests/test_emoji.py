@@ -1,11 +1,5 @@
 from flask import request
 
-# with client() as c:
-#     rv = c.get('/emojis')
-#     json_data = rv.get_json()
-#     status_code = rv.status_code
-#     assert status_code == 200
-
 
 def test_get_emojis(client):
     r = client.get("/emojis")
