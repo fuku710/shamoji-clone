@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from flask_jwt import jwt_required, current_identity
 from shamoji.models.user import UserModel
 
 
@@ -16,4 +17,11 @@ class UserRegister(Resource):
         except:
             return {"message": "Failed to register user"}, 500
 
-        return {"message": "Success to register user"}, 201
+        return user.json(), 201
+
+
+class User(Resource):
+    @jwt_required()
+    def get(self):
+        user = current_identity
+        return user.json(), 200

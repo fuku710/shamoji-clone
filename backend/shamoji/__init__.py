@@ -6,7 +6,7 @@ from datetime import timedelta
 
 from shamoji.auth import authenticate, identity
 from shamoji.resources.emoji import Emoji, Emojis
-from shamoji.resources.user import UserRegister
+from shamoji.resources.user import User, UserRegister
 
 
 def create_app():
@@ -28,6 +28,7 @@ def create_app():
     api = Api(app)
     api.add_resource(Emoji, "/emoji/<int:_id>")
     api.add_resource(Emojis, "/emojis")
+    api.add_resource(User, "/user")
     api.add_resource(UserRegister, "/register")
 
     from shamoji.db import db, init_db_command
