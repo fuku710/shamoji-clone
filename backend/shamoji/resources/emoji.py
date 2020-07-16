@@ -6,7 +6,7 @@ from shamoji.models.emoji import EmojiModel
 class Emoji(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument("name")
-    parser.add_argument("image_base64")
+    parser.add_argument("imageBase64")
 
     def get(self, _id):
         emoji = EmojiModel.find_by_id(_id)
@@ -25,8 +25,8 @@ class Emoji(Resource):
 
         if data["name"]:
             emoji.name = data["name"]
-        if data["image_base64"]:
-            emoji.image_base64 = data["image_base64"]
+        if data["imageBase64"]:
+            emoji.image_base64 = data["imageBase64"]
 
         try:
             emoji.save()
@@ -54,7 +54,7 @@ class Emoji(Resource):
 class Emojis(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument("name")
-    parser.add_argument("image_base64")
+    parser.add_argument("imageBase64")
 
     def get(self):
         emojis = EmojiModel.all()
@@ -65,7 +65,7 @@ class Emojis(Resource):
         data = Emoji.parser.parse_args()
         user = current_identity
         emoji = EmojiModel(
-            name=data["name"], image_base64=data["image_base64"], user_id=user.id
+            name=data["name"], image_base64=data["imageBase64"], user_id=user.id
         )
 
         try:

@@ -19,8 +19,8 @@ class EmojiModel(db.Model):
     def json(self):
         return {
             "name": self.name,
-            "image_base64": self.image_base64,
             "user": self.user.username,
+            "imageBase64": self.image_base64,
         }
 
     def save(self):
