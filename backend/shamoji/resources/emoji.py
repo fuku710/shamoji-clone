@@ -6,7 +6,7 @@ from shamoji.models.emoji import EmojiModel
 class Emoji(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument("name")
-    parser.add_argument("imageBase64")
+    parser.add_argument("dataUrl")
 
     def get(self, _id):
         emoji = EmojiModel.find_by_id(_id)
@@ -25,8 +25,8 @@ class Emoji(Resource):
 
         if data["name"]:
             emoji.name = data["name"]
-        if data["imageBase64"]:
-            emoji.image_base64 = data["imageBase64"]
+        if data["dataUrl"]:
+            emoji.data_url = data["dataUrl"]
 
         try:
             emoji.save()
@@ -48,24 +48,24 @@ class Emoji(Resource):
         except:
             return {"message": "Failed to delete emoji"}, 500
 
-        return {"message": "Success to delete emoji"}, 200
+        return None, 204
 
 
 class Emojis(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument("name")
-    parser.add_argument("imageBase64")
+    parser.add_argument("dataUrl")
 
     def get(self):
         emojis = EmojiModel.all()
-        return {"emojis": list(map(lambda emoji: emoji.json(), emojis))}, 200
+        return list(map(lambda emoji: emoji.json(), emojis)), 200
 
     @jwt_required()
     def post(self):
         data = Emoji.parser.parse_args()
         user = current_identity
         emoji = EmojiModel(
-            name=data["name"], image_base64=data["imageBase64"], user_id=user.id
+            name=data["name"], data_url=data["dataUrl"], user_id=user.id
         )
 
         try:
