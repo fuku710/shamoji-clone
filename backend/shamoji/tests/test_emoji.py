@@ -61,5 +61,5 @@ def test_delete_emoji(client, auth):
     access_token = auth.login().get_json()["access_token"]
     r = client.delete("/emoji/1", headers={"authorization": f"jwt {access_token}"})
     assert r.status_code == 204
-    assert r.get_data() == None
+    assert r.get_data(as_text=True) == ""
 
