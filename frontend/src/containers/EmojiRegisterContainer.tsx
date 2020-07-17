@@ -3,8 +3,8 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../contexts/auth";
 
 export const EmojiRegisterContainer: React.FC = () => {
-  const [imageBase64, setImageBase64] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [dataUrl, setDataUrl] = useState<string>("");
   const { state } = useContext(AuthContext);
 
   const inputFilesHandler = (files: FileList) => {
@@ -14,8 +14,7 @@ export const EmojiRegisterContainer: React.FC = () => {
     reader.readAsDataURL(file);
     reader.onload = (e) => {
       const dataUrl = e.target.result as string;
-      const [, imageBase64] = dataUrl.split(",");
-      setImageBase64(imageBase64);
+      setDataUrl(dataUrl);
     };
   };
 
@@ -26,7 +25,7 @@ export const EmojiRegisterContainer: React.FC = () => {
         "Content-Type": "application/json",
         Authorization: `jwt ${state.accessToken}`,
       },
-      body: JSON.stringify({ name, imageBase64 }),
+      body: JSON.stringify({ name, dataUrl }),
     });
   };
 

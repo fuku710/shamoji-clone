@@ -1,5 +1,6 @@
 export type Emoji = {
+  id: number;
   name: string;
   user: string;
-  imageBase64: string;
+  dataUrl: string;
 };

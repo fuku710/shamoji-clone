@@ -13,8 +13,8 @@ export const EmojiCardList: React.FC<EmojiCardListProps> = (props) => {
         <EmojiCard
           name={emoji.name}
           user={emoji.user}
-          imageBase64={emoji.imageBase64}
-          key={emoji.name}
+          imageUrl={emoji.dataUrl}
+          key={emoji.id}
         />
       ))}
     </div>

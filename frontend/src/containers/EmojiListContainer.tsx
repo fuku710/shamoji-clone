@@ -9,8 +9,8 @@ export const EmojiListContainer: React.FC = () => {
   useEffect(() => {
     const fetchEmojis = async () => {
       const response: Response = await fetch("http://localhost:5000/emojis");
-      const data: { emojis: Emoji[] } = await response.json();
-      setEmojis(data.emojis);
+      const emojis: Emoji[] = await response.json();
+      setEmojis(emojis);
     };
 
     fetchEmojis();

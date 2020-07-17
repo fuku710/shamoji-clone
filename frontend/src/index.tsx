@@ -24,7 +24,6 @@ const App: React.FC = () => {
       });
       if (response.status === 200) {
         const accessToken: string = (await response.json()).access_token;
-        console.log(accessToken);
         dispatch({ type: "LOGIN_SUCCEED", payload: accessToken });
       } else {
         dispatch({ type: "LOGIN_FAILED" });
