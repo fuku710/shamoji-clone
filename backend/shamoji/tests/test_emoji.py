@@ -19,7 +19,7 @@ def test_post_emoji(client, auth):
     r = client.post(
         "/emojis",
         json={"name": "test_emoji2", "dataUrl": "data:image/jpg;base64,fugafuga"},
-        headers={"authorization": "jwt {}".format(access_token)},
+        headers={"authorization": f"jwt {access_token}"},
     )
     assert r.status_code == 201
     assert r.get_json() == {
@@ -46,7 +46,7 @@ def test_patch_emoji(client, auth):
     r = client.patch(
         "/emoji/1",
         json={"name": "test_emoji1_updated"},
-        headers={"authorization": "jwt {}".format(access_token)},
+        headers={"authorization": f"jwt {access_token}"},
     )
     assert r.status_code == 200
     assert r.get_json() == {
@@ -59,9 +59,7 @@ def test_patch_emoji(client, auth):
 
 def test_delete_emoji(client, auth):
     access_token = auth.login().get_json()["access_token"]
-    r = client.delete(
-        "/emoji/1", headers={"authorization": "jwt {}".format(access_token)}
-    )
+    r = client.delete("/emoji/1", headers={"authorization": f"jwt {access_token}"})
     assert r.status_code == 204
     assert r.get_data() == None
 
