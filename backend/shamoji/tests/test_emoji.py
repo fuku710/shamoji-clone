@@ -53,7 +53,7 @@ def test_patch_emoji(client, auth):
         "id": 1,
         "name": "test_emoji1_updated",
         "user": "test",
-        "imageBase64": "data:image/jpg;base64,hogehoge",
+        "dataUrl": "data:image/jpg;base64,hogehoge",
     }
 
 
