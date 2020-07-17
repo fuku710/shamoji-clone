@@ -31,9 +31,10 @@ def create_app():
     api.add_resource(User, "/user")
     api.add_resource(UserRegister, "/register")
 
-    from shamoji.db import db, init_db_command
+    from shamoji.db import db, init_db_command, reset_db_command
 
     db.init_app(app)
     app.cli.add_command(init_db_command)
+    app.cli.add_command(reset_db_command)
 
     return app
