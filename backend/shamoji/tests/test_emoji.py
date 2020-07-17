@@ -4,29 +4,40 @@ from flask import request
 def test_get_emojis(client):
     r = client.get("/emojis")
     assert r.status_code == 200
-    assert r.get_json() == {
-        "emojis": [{"name": "test_emoji", "user": "test", "imageBase64": "abcde"}]
-    }
+    assert r.get_json() == [
+        {
+            "id": 1,
+            "name": "test_emoji1",
+            "user": "test",
+            "dataUrl": "data:image/jpg;base64,hogehoge",
+        }
+    ]
 
 
 def test_post_emoji(client, auth):
     access_token = auth.login().get_json()["access_token"]
     r = client.post(
         "/emojis",
-        json={"name": "sample", "imageBase64": "hoge"},
+        json={"name": "test_emoji2", "dataUrl": "data:image/jpg;base64,fugafuga"},
         headers={"authorization": "jwt {}".format(access_token)},
     )
     assert r.status_code == 201
-    assert r.get_json() == {"name": "sample", "imageBase64": "hoge", "user": "test"}
+    assert r.get_json() == {
+        "id": 2,
+        "name": "test_emoji2",
+        "user": "test",
+        "dataUrl": "data:image/jpg;base64,fugafuga",
+    }
 
 
 def test_get_emoji(client):
     r = client.get("/emoji/1")
     assert r.status_code == 200
     assert r.get_json() == {
-        "name": "test_emoji",
+        "id": 1,
+        "name": "test_emoji1",
         "user": "test",
-        "imageBase64": "abcde",
+        "dataUrl": "data:image/jpg;base64,hogehoge",
     }
 
 
@@ -34,14 +45,15 @@ def test_patch_emoji(client, auth):
     access_token = auth.login().get_json()["access_token"]
     r = client.patch(
         "/emoji/1",
-        json={"name": "updated"},
+        json={"name": "test_emoji1_updated"},
         headers={"authorization": "jwt {}".format(access_token)},
     )
     assert r.status_code == 200
     assert r.get_json() == {
-        "name": "updated",
+        "id": 1,
+        "name": "test_emoji1_updated",
         "user": "test",
-        "imageBase64": "abcde",
+        "imageBase64": "data:image/jpg;base64,hogehoge",
     }
 
 
@@ -50,6 +62,6 @@ def test_delete_emoji(client, auth):
     r = client.delete(
         "/emoji/1", headers={"authorization": "jwt {}".format(access_token)}
     )
-    assert r.status_code == 200
-    assert r.get_json() == {"message": "Success to delete emoji"}
+    assert r.status_code == 204
+    assert r.get_data() == None
 
