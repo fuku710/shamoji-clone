@@ -21,7 +21,7 @@ def app():
 
         test_user = UserModel("test", "test")
         test_user.save()
-        test_emoji = EmojiModel("test_emoji", test_user.id, "abcde")
+        test_emoji = EmojiModel("test_emoji1", test_user.id, "data:image/jpg;base64,hogehoge")
         test_emoji.save()
 
     yield app
