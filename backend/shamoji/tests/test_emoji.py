@@ -1,4 +1,5 @@
 from flask import request
+import pytest
 
 
 def test_get_emojis(client):
@@ -28,6 +29,19 @@ def test_post_emoji(client, auth):
         "user": "test",
         "dataUrl": "data:image/jpg;base64,fugafuga",
     }
+
+
+@pytest.mark.parametrize(
+    ("name", "data_url"), [("", "data:image/jpg;base64,fugafuga"), ("tese_emoji2", "")]
+)
+def test_post_invalid_emoji(client, auth, name, data_url):
+    access_token = auth.login().get_json()["access_token"]
+    r = client.post(
+        "/emojis",
+        json={"name": name, "dataUrl": data_url},
+        headers={"authorization": f"jwt {access_token}"},
+    )
+    assert r.status_code == 422
 
 
 def test_get_emoji(client):
