@@ -1,4 +1,5 @@
 from shamoji.db import db
+from sqlalchemy.orm import validates
 
 
 class UserModel(db.Model):
@@ -7,6 +8,16 @@ class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
+
+    @validates("username")
+    def validate_username(self, key, username):
+        assert username is not ""
+        return username
+
+    @validates("password")
+    def validate_password(self, key, password):
+        assert len(password) >= 8
+        return password
 
     def __init__(self, username, password):
         self.username = username

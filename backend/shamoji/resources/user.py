@@ -10,11 +10,14 @@ class UserRegister(Resource):
 
     def post(self):
         data = UserRegister.parser.parse_args()
-        user = UserModel(**data)
 
         try:
+            user = UserModel(**data)
             user.save()
-        except:
+        except AssertionError:
+            return {"message": "Failed validation"}, 422
+        except Exception as e:
+            print(e)
             return {"message": "Failed to register user"}, 500
 
         return user.json(), 201
