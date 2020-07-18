@@ -14,18 +14,15 @@ import {
   persistAccessToken,
 } from "./contexts/auth";
 import { EmojiRegisterContainer } from "./containers/EmojiRegisterContainer";
+import { apiClient } from "./api";
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const login = async () => {
-      const response: Response = await fetch("http://localhost:5000/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(state.auth),
+      const response: Response = await apiClient("/auth", "POST", {
+        json: state.auth,
       });
       if (response.status === 200) {
         const accessToken: string = (await response.json()).access_token;
@@ -41,10 +38,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response: Response = await fetch("http://localhost:5000/user", {
-        headers: {
-          Authorization: `jwt ${state.accessToken}`,
-        },
+      const response: Response = await apiClient("/user", "GET", {
+        accessToken: state.accessToken,
       });
       const username: string = (await response.json()).username;
       dispatch({ type: "SET_USERNAME", payload: username });

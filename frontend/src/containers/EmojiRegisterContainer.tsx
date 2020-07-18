@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import { EmojiCrop } from "../components/EmojiCrop";
 import { AuthContext } from "../contexts/auth";
 import ReactCropper from "react-cropper";
+import { apiClient } from "../api";
 
 export const EmojiRegisterContainer: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -31,13 +32,9 @@ export const EmojiRegisterContainer: React.FC = () => {
     cropper.getCroppedCanvas({ width: 128, height: 128 }).toDataURL();
 
   const sendEmoji = async (name: string, dataUrl: string) => {
-    await fetch("http://localhost:5000/emojis", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `jwt ${state.accessToken}`,
-      },
-      body: JSON.stringify({ name, dataUrl }),
+    await apiClient("/emojis", "POST", {
+      accessToken: state.accessToken,
+      json: { name, dataUrl },
     });
   };
 
