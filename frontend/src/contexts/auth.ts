@@ -5,8 +5,13 @@ type Auth = {
   password: string;
 };
 
+type User = {
+  username: string;
+}
+
 type State = {
   auth: Auth;
+  user: User;
   accessToken: string;
 };
 
@@ -17,11 +22,15 @@ type Action =
   | { type: "LOGOUT" }
   | { type: "SET_ACCESS_TOKEN"; payload: string }
   | { type: "SET_USERNAME"; payload: string }
+  | { type: "SET_ERROR_MESSAGE"; payload: string }
 
 export const initialState: State = {
   auth: {
     username: null,
     password: null,
+  },
+  user: {
+    username: null,
   },
   accessToken: null,
 };
@@ -37,7 +46,7 @@ export const reducer: React.Reducer<State, Action> = (state, action) => {
       return {
         ...state,
         auth: {
-          ...state.auth,
+          username: null,
           password: null,
         },
         accessToken: action.payload,
@@ -64,18 +73,20 @@ export const reducer: React.Reducer<State, Action> = (state, action) => {
     case "SET_ACCESS_TOKEN":
       return {
         ...state,
-        auth: {
-          ...state.auth,
-        },
         accessToken: action.payload,
       }
     case "SET_USERNAME":
       return {
         ...state,
-        auth: {
-          ...state.auth,
+        user: {
+          ...state.user,
           username: action.payload
         },
+      }
+    case "SET_ERROR_MESSAGE":
+      return {
+        ...state,
+        errorMessage: action.payload
       }
     default:
       return state;

@@ -20,23 +20,6 @@ const App: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const login = async () => {
-      const response: Response = await apiClient("/auth", "POST", {
-        json: state.auth,
-      });
-      if (response.status === 200) {
-        const accessToken: string = (await response.json()).access_token;
-        dispatch({ type: "LOGIN_SUCCEED", payload: accessToken });
-      } else {
-        dispatch({ type: "LOGIN_FAILED" });
-      }
-    };
-    if (state.auth.username && state.auth.password) {
-      login();
-    }
-  }, [state.auth]);
-
-  useEffect(() => {
     const fetchUser = async () => {
       const response: Response = await apiClient("/user", "GET", {
         accessToken: state.accessToken,

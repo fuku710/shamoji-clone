@@ -16,10 +16,12 @@ export const Header: React.FC<Props> = (props) => {
       <Link to="/">
         <h1>{props.title}</h1>
       </Link>
-      <div>{isLoggedIn && state.auth.username}</div>
+      <div>{isLoggedIn && state.user.username}</div>
       {isLoggedIn ? (
         <>
-          <button onClick={() => dispatch({ type: "LOGOUT" })}>ログアウト</button>
+          <button onClick={() => dispatch({ type: "LOGOUT" })}>
+            ログアウト
+          </button>
           <Link to="/emoji/new">絵文字登録</Link>
         </>
       ) : (
