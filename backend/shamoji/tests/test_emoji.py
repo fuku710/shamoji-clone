@@ -71,6 +71,14 @@ def test_patch_emoji(client, auth):
     }
 
 
+def test_patch_invalid_emoji(client, auth):
+    access_token = auth.login().get_json()["access_token"]
+    r = client.patch(
+        "/emoji/1", json={"name": ""}, headers={"authorization": f"jwt {access_token}"},
+    )
+    assert r.status_code == 422
+
+
 def test_delete_emoji(client, auth):
     access_token = auth.login().get_json()["access_token"]
     r = client.delete("/emoji/1", headers={"authorization": f"jwt {access_token}"})
