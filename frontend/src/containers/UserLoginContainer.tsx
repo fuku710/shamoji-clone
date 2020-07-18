@@ -27,6 +27,7 @@ export const UserLoginContainer: React.FC = () => {
           ></input>
         </div>
         <button
+          type="button"
           onClick={() => {
             dispatch({
               type: "LOGIN",

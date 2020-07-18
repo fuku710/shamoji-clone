@@ -1,14 +1,18 @@
 import * as React from "react";
 import { useState, useContext } from "react";
+
+import { EmojiCrop } from "../components/EmojiCrop";
 import { AuthContext } from "../contexts/auth";
+import ReactCropper from "react-cropper";
 
 export const EmojiRegisterContainer: React.FC = () => {
   const [name, setName] = useState<string>("");
-  const [dataUrl, setDataUrl] = useState<string>("");
+  const [dataUrl, setDataUrl] = useState<string>(null);
+  const cropperEl = React.useRef<ReactCropper>();
   const { state } = useContext(AuthContext);
 
-  const inputFilesHandler = (files: FileList) => {
-    const file = files[0];
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file: File = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -18,7 +22,15 @@ export const EmojiRegisterContainer: React.FC = () => {
     };
   };
 
-  const sendEmoji = async () => {
+  const handleClickButton = () => {
+    const croppedDataUrl = getCroppedDataUrl(cropperEl.current);
+    sendEmoji(name, croppedDataUrl);
+  };
+
+  const getCroppedDataUrl = (cropper: ReactCropper): string =>
+    cropper.getCroppedCanvas({ width: 128, height: 128 }).toDataURL();
+
+  const sendEmoji = async (name: string, dataUrl: string) => {
     await fetch("http://localhost:5000/emojis", {
       method: "POST",
       headers: {
@@ -31,13 +43,11 @@ export const EmojiRegisterContainer: React.FC = () => {
 
   return (
     <>
+      <EmojiCrop imageUrl={dataUrl} ref={cropperEl} />
       <form>
         <div>
           <label>画像</label>
-          <input
-            type="file"
-            onChange={(e) => inputFilesHandler(e.target.files)}
-          ></input>
+          <input type="file" onChange={handleChangeInput}></input>
         </div>
         <div>
           <label>名前</label>
@@ -48,7 +58,9 @@ export const EmojiRegisterContainer: React.FC = () => {
             }}
           ></input>
         </div>
-        <button onClick={sendEmoji}>送信</button>
+        <button type="button" onClick={handleClickButton}>
+          送信
+        </button>
       </form>
     </>
   );
