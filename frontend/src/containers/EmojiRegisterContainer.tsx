@@ -1,64 +1,66 @@
 import * as React from "react";
 import { useState, useContext } from "react";
 
-import { EmojiCrop } from "../components/EmojiCrop";
-import { AuthContext } from "../contexts/auth";
-import ReactCropper from "react-cropper";
 import { apiClient } from "../api";
+import { AuthContext } from "../contexts/auth";
+import { RegisterEmojiForm } from "../components/RegisterEmojiForm";
+
+type vError = {
+  field?: string;
+  message: string;
+};
 
 export const EmojiRegisterContainer: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [dataUrl, setDataUrl] = useState<string>(null);
-  const cropperEl = React.useRef<ReactCropper>();
+  const [vErrors, setVErrors] = useState<vError[]>([]);
+  const [registerError, setRegisterError] = useState<string>(null);
   const { state } = useContext(AuthContext);
 
-  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file: File = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (e) => {
-      const dataUrl = e.target.result as string;
-      setDataUrl(dataUrl);
-    };
+  const validateInput = (): boolean => {
+    const errors: vError[] = [];
+    if (!name) {
+      errors.push({ field: "name", message: "名前が入力されていません" });
+    }
+    if (!dataUrl) {
+      errors.push({ field: "dataUrl", message: "画像が選択されていません" });
+    }
+    setVErrors(errors);
+    return errors.length === 0;
   };
 
-  const handleClickButton = () => {
-    const croppedDataUrl = getCroppedDataUrl(cropperEl.current);
-    sendEmoji(name, croppedDataUrl);
-  };
-
-  const getCroppedDataUrl = (cropper: ReactCropper): string =>
-    cropper.getCroppedCanvas({ width: 128, height: 128 }).toDataURL();
-
-  const sendEmoji = async (name: string, dataUrl: string) => {
-    await apiClient("/emojis", "POST", {
+  const sendEmoji = async () => {
+    const response = await apiClient("/emojis", "POST", {
       accessToken: state.accessToken,
       json: { name, dataUrl },
     });
+    if (response.status !== 201) {
+      setRegisterError("登録に失敗しました");
+    }
+  };
+
+  const handleSubmitEmojiForm = (e: React.FormEvent) => {
+    setRegisterError(null);
+    if (validateInput()) sendEmoji();
+    e.preventDefault();
   };
 
   return (
     <>
-      <EmojiCrop imageUrl={dataUrl} ref={cropperEl} />
-      <form>
-        <div>
-          <label>画像</label>
-          <input type="file" onChange={handleChangeInput}></input>
-        </div>
-        <div>
-          <label>名前</label>
-          <input
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          ></input>
-        </div>
-        <button type="button" onClick={handleClickButton}>
-          送信
-        </button>
-      </form>
+      <h2>絵文字登録</h2>
+      <RegisterEmojiForm
+        name={name}
+        dataUrl={dataUrl}
+        onChangeName={setName}
+        onChangeDataUrl={setDataUrl}
+        onSubmit={handleSubmitEmojiForm}
+      />
+      <div style={{ color: "red" }}>
+        {vErrors.map((vError) => (
+          <div key={vError.field}>{vError.message}</div>
+        ))}
+        <div>{registerError}</div>
+      </div>
     </>
   );
 };

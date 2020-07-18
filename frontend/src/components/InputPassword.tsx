@@ -5,7 +5,7 @@ type Props = {
   onChange?: any;
 };
 
-export const PasswordInput: React.FC<Props> = (props) => {
+export const InputPassword: React.FC<Props> = (props) => {
   return (
     <div>
       <label>パスワード</label>

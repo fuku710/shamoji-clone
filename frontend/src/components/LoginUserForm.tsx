@@ -1,6 +1,6 @@
 import * as React from "react";
-import { UsernameInput } from "./UsernameInput";
-import { PasswordInput } from "./PasswordInput";
+import { InputUsername } from "./InputUsername";
+import { InputPassword } from "./InputPassword";
 
 type Props = {
   username: string;
@@ -20,11 +20,11 @@ export const LoginUserForm: React.FC<Props> = (props) => {
   };
   return (
     <form onSubmit={props.onSubmit}>
-      <UsernameInput
+      <InputUsername
         username={props.username}
         onChange={handleChangeUsername}
       />
-      <PasswordInput
+      <InputPassword
         password={props.password}
         onChange={handleChangePassword}
       />

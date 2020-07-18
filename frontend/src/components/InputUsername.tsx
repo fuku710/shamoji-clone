@@ -5,7 +5,7 @@ type Props = {
   onChange?: any;
 };
 
-export const UsernameInput: React.FC<Props> = (props) => {
+export const InputUsername: React.FC<Props> = (props) => {
   return (
     <div>
       <label>ユーザー名</label>
