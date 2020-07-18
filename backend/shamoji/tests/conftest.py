@@ -19,7 +19,7 @@ def app():
         from shamoji.models.user import UserModel
         from shamoji.models.emoji import EmojiModel
 
-        test_user = UserModel("test", "test")
+        test_user = UserModel("test", "password")
         test_user.save()
         test_emoji = EmojiModel("test_emoji1", test_user.id, "data:image/jpg;base64,hogehoge")
         test_emoji.save()
@@ -39,7 +39,7 @@ class AuthActions(object):
     def __init__(self, client):
         self._client = client
 
-    def login(self, username="test", password="test"):
+    def login(self, username="test", password="password"):
         return self._client.post(
             "/auth", json={"username": username, "password": password}
         )
