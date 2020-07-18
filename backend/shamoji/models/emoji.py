@@ -1,4 +1,5 @@
 from shamoji.db import db
+from sqlalchemy.orm import validates
 
 
 class EmojiModel(db.Model):
@@ -7,9 +8,19 @@ class EmojiModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True, nullable=False)
     data_url = db.Column(db.String, nullable=False)
-
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
     user = db.relationship("UserModel")
+
+    @validates("name")
+    def validate_name(self, key, name):
+        assert name is not ""
+        return name
+
+    @validates("data_url")
+    def validate_data_url(self,key,data_url):
+        assert data_url is not ""
+        return data_url
 
     def __init__(self, name, user_id, data_url):
         self.name = name

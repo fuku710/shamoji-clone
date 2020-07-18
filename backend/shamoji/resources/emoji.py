@@ -22,15 +22,16 @@ class Emoji(Resource):
 
         if emoji is None:
             return {"message": "Emoji is not found"}, 404
-
-        if data["name"]:
-            emoji.name = data["name"]
-        if data["dataUrl"]:
-            emoji.data_url = data["dataUrl"]
-
         try:
+            if data["name"] is not None:
+                emoji.name = data["name"]
+            if data["dataUrl"] is not None:
+                emoji.data_url = data["dataUrl"]
             emoji.save()
-        except:
+        except AssertionError:
+            return {"message": "Failed validation"}, 422
+        except Exception as e:
+            print(e)
             return {"message": "Failed to insert emoji"}, 500
 
         return emoji.json(), 200
@@ -42,10 +43,10 @@ class Emoji(Resource):
 
         if emoji is None:
             return {"message": "Emoji is not found"}, 404
-
         try:
             emoji.delete()
-        except:
+        except Exception as e:
+            print(e)
             return {"message": "Failed to delete emoji"}, 500
 
         return None, 204
@@ -64,13 +65,15 @@ class Emojis(Resource):
     def post(self):
         data = Emoji.parser.parse_args()
         user = current_identity
-        emoji = EmojiModel(
-            name=data["name"], data_url=data["dataUrl"], user_id=user.id
-        )
-
         try:
+            emoji = EmojiModel(
+                name=data["name"], data_url=data["dataUrl"], user_id=user.id
+            )
             emoji.save()
-        except:
+        except AssertionError:
+            return {"message": "Failed validation"}, 422
+        except Exception as e:
+            print(e)
             return {"message": "Failed to insert emoji"}, 500
 
         return emoji.json(), 201
