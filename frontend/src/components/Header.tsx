@@ -10,7 +10,7 @@ type Props = {
 
 export const Header: React.FC<Props> = (props) => {
   const { state, dispatch } = useContext(AuthContext);
-  const isLoggedIn = !!state.accessToken;
+  const isLoggedIn = state.accessToken && state.user.username;
   return (
     <header>
       <Link to="/">
