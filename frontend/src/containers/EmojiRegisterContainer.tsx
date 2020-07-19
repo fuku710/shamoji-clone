@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 import { apiClient } from "../api";
 import { UserContext, UserStore } from "../stores/user";
@@ -17,6 +18,7 @@ export const EmojiRegisterContainer: React.FC = () => {
   const [vErrors, setVErrors] = useState<vError[]>([]);
   const [registerError, setRegisterError] = useState<string>(null);
   const { state } = useContext<UserStore>(UserContext);
+  const history = useHistory()
 
   const validateInput = (): boolean => {
     const errors: vError[] = [];
@@ -37,6 +39,8 @@ export const EmojiRegisterContainer: React.FC = () => {
     });
     if (response.status !== 201) {
       setRegisterError("登録に失敗しました");
+    } else {
+      history.push('/')
     }
   };
 
