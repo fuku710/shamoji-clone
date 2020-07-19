@@ -1,4 +1,5 @@
 import * as React from "react";
+import { InputWrapper, InputLabel, Input } from "./common/Input";
 
 type Props = {
   username: string;
@@ -7,9 +8,9 @@ type Props = {
 
 export const InputUsername: React.FC<Props> = (props) => {
   return (
-    <div>
-      <label>ユーザー名</label>
-      <input type="text" value={props.username} onChange={props.onChange} />
-    </div>
+    <InputWrapper>
+      <InputLabel>ユーザー名</InputLabel>
+      <Input type="text" value={props.username} onChange={props.onChange} />
+    </InputWrapper>
   );
 };

@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { UserContext, UserStore } from "../stores/user";
 import { LoginUserForm } from "../components/LoginUserForm";
 import { apiClient } from "../api";
+import { Heading } from "../components/common/Heading";
 
 type Error = {
   field?: string;
@@ -66,7 +67,7 @@ export const UserLoginContainer: React.FC = () => {
 
   return (
     <>
-      <h2>ログイン</h2>
+      <Heading>ログイン</Heading>
       <LoginUserForm
         username={username}
         password={password}

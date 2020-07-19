@@ -1,6 +1,8 @@
 import * as React from "react";
 import { InputPassword } from "./InputPassword";
 import { InputUsername } from "./InputUsername";
+import { Button } from "./common/Button";
+import { Form } from "./common/Form";
 
 type Props = {
   username: string;
@@ -25,7 +27,7 @@ export const RegisterUserForm: React.FC<Props> = (props) => {
     props.onChangeConfPassword(password);
   };
   return (
-    <form onSubmit={props.onSubmit}>
+    <Form onSubmit={props.onSubmit}>
       <InputUsername
         username={props.username}
         onChange={handleChangeUsername}
@@ -39,7 +41,7 @@ export const RegisterUserForm: React.FC<Props> = (props) => {
         password={props.confPassword}
         onChange={handleChangeConfPassword}
       />
-      <button>登録</button>
-    </form>
+      <Button>登録</Button>
+    </Form>
   );
 };

@@ -1,6 +1,8 @@
 import * as React from "react";
 import { InputEmoji } from "./InputEmoji";
 import { InputName } from "./InputName";
+import { Button } from "./common/Button";
+import { Form } from "./common/Form";
 
 type Props = {
   name: string;
@@ -22,10 +24,10 @@ export const RegisterEmojiForm: React.FC<Props> = (props) => {
     props.onChangeName(name);
   };
   return (
-    <form onSubmit={props.onSubmit}>
+    <Form onSubmit={props.onSubmit}>
       <InputEmoji onChange={handleChangeEmoji} />
       <InputName name={props.name} onChange={handleChangeName} />
-      <button>送信</button>
-    </form>
+      <Button>送信</Button>
+    </Form>
   );
 };

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { InputWrapper, InputLabel, Input } from "./common/Input";
 
 type Props = {
   password: string;
@@ -8,9 +9,9 @@ type Props = {
 
 export const InputPassword: React.FC<Props> = (props) => {
   return (
-    <div>
-      <label>{props.label || "パスワード"}</label>
-      <input type="password" value={props.password} onChange={props.onChange} />
-    </div>
+    <InputWrapper>
+      <InputLabel>{props.label || "パスワード"}</InputLabel>
+      <Input type="password" value={props.password} onChange={props.onChange} />
+    </InputWrapper>
   );
 };

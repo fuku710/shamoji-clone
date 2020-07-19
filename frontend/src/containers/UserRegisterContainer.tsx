@@ -2,6 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { apiClient } from "../api";
 import { RegisterUserForm } from "../components/RegisterUserForm";
+import { Heading } from "../components/common/Heading";
 
 type vError = {
   field?: string;
@@ -61,7 +62,7 @@ export const UserRegisterContainer: React.FC = () => {
 
   return (
     <>
-      <h2>ユーザー登録</h2>
+      <Heading>ユーザー登録</Heading>
       <RegisterUserForm
         username={username}
         password={password}

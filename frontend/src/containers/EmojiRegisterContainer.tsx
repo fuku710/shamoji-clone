@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import { apiClient } from "../api";
 import { UserContext, UserStore } from "../stores/user";
 import { RegisterEmojiForm } from "../components/RegisterEmojiForm";
+import { Heading } from "../components/common/Heading";
 
 type vError = {
   field?: string;
@@ -47,7 +48,7 @@ export const EmojiRegisterContainer: React.FC = () => {
 
   return (
     <>
-      <h2>絵文字登録</h2>
+      <Heading>絵文字登録</Heading>
       <RegisterEmojiForm
         name={name}
         dataUrl={dataUrl}

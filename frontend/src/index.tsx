@@ -2,6 +2,8 @@ import * as ReactDOM from "react-dom";
 import * as React from "react";
 import { useReducer, useEffect } from "react";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import styled, { createGlobalStyle } from "styled-components";
+import "normalize.css";
 
 import { EmojiListContainer } from "./containers/EmojiListContainer";
 import { UserLoginContainer } from "./containers/UserLoginContainer";
@@ -12,6 +14,8 @@ import { Header } from "./components/Header";
 
 import { reducer, initialState, UserContext } from "./stores/user";
 import { apiClient } from "./api";
+
+import { GRAY_1 } from "./components/common/Colors";
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -37,28 +41,47 @@ const App: React.FC = () => {
 
   return (
     <UserContext.Provider value={{ state, dispatch }}>
+      <GlobalStyle />
       <Router>
         <Header title="Shamoji@Clone" />
-        <Switch>
-          <Route path="/register">
-            <UserRegisterContainer />
-          </Route>
-          <Route path="/login">
-            <UserLoginContainer />
-          </Route>
-          <Route path="/emoji/new">
-            <EmojiRegisterContainer />
-          </Route>
-          <Route path="/emoji">
-            <EmojiListContainer />
-          </Route>
-          <Route path="/">
-            <EmojiListContainer />
-          </Route>
-        </Switch>
+        <Layout>
+          <Switch>
+            <Route path="/register">
+              <UserRegisterContainer />
+            </Route>
+            <Route path="/login">
+              <UserLoginContainer />
+            </Route>
+            <Route path="/emoji/new">
+              <EmojiRegisterContainer />
+            </Route>
+            <Route path="/emoji">
+              <EmojiListContainer />
+            </Route>
+            <Route path="/">
+              <EmojiListContainer />
+            </Route>
+          </Switch>
+        </Layout>
       </Router>
     </UserContext.Provider>
   );
 };
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+      Meiryo, sans-serif;
+    background: ${GRAY_1}
+  }
+`;
+
+const Layout = styled.div`
+  height: 100vh;
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 ReactDOM.render(<App />, document.getElementById("app"));

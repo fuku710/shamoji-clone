@@ -19,10 +19,7 @@ export const EmojiListContainer: React.FC = () => {
 
   return (
     <>
-      <h2>emoji 一覧</h2>
-      <div>
-        <EmojiCardList emojis={emojis} />
-      </div>
+      <EmojiCardList emojis={emojis} />
     </>
   );
 };

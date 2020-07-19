@@ -1,4 +1,5 @@
 import * as React from "react";
+import styled from "styled-components";
 import { EmojiCard } from "./EmojiCard";
 import { Emoji } from "../types";
 
@@ -8,7 +9,7 @@ type EmojiCardListProps = {
 
 export const EmojiCardList: React.FC<EmojiCardListProps> = (props) => {
   return (
-    <div>
+    <CardList>
       {props.emojis.map((emoji) => (
         <EmojiCard
           name={emoji.name}
@@ -17,6 +18,14 @@ export const EmojiCardList: React.FC<EmojiCardListProps> = (props) => {
           key={emoji.id}
         />
       ))}
-    </div>
+    </CardList>
   );
 };
+
+const CardList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  > *{
+    margin: 8px;
+  }
+`;
