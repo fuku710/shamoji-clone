@@ -2,15 +2,15 @@ import * as React from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { AuthContext } from "../contexts/auth";
+import { UserContext, UserStore } from "../stores/user";
 
 type Props = {
   title: String;
 };
 
 export const Header: React.FC<Props> = (props) => {
-  const { state, dispatch } = useContext(AuthContext);
-  const isLoggedIn = state.accessToken && state.user.username;
+  const { state, dispatch } = useContext<UserStore>(UserContext);
+  const isLoggedIn = state.accessToken && state.user;
   return (
     <header>
       <Link to="/">

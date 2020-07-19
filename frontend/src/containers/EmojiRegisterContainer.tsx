@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState, useContext } from "react";
 
 import { apiClient } from "../api";
-import { AuthContext } from "../contexts/auth";
+import { UserContext, UserStore } from "../stores/user";
 import { RegisterEmojiForm } from "../components/RegisterEmojiForm";
 
 type vError = {
@@ -15,7 +15,7 @@ export const EmojiRegisterContainer: React.FC = () => {
   const [dataUrl, setDataUrl] = useState<string>(null);
   const [vErrors, setVErrors] = useState<vError[]>([]);
   const [registerError, setRegisterError] = useState<string>(null);
-  const { state } = useContext(AuthContext);
+  const { state } = useContext<UserStore>(UserContext);
 
   const validateInput = (): boolean => {
     const errors: vError[] = [];

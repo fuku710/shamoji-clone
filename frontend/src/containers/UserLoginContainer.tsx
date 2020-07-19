@@ -1,7 +1,7 @@
 import * as React from "react";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 
-import { AuthContext } from "../contexts/auth";
+import { UserContext, UserStore } from "../stores/user";
 import { LoginUserForm } from "../components/LoginUserForm";
 import { apiClient } from "../api";
 
@@ -11,7 +11,7 @@ type Error = {
 };
 
 export const UserLoginContainer: React.FC = () => {
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext<UserStore>(UserContext);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<Error[]>([]);
@@ -23,7 +23,7 @@ export const UserLoginContainer: React.FC = () => {
     });
     if (response.status === 200) {
       const accessToken: string = (await response.json()).access_token;
-      dispatch({ type: "SET_ACCESS_TOKEN", payload: accessToken });
+      dispatch({ type: "LOGIN", payload: accessToken });
     } else {
       setLoginError("ログインに失敗しました");
     }
