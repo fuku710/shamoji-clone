@@ -9,7 +9,9 @@ export type EmojiCardProps = {
 export const EmojiCard: React.FC<EmojiCardProps> = (props) => {
   return (
     <div>
-      <img width="64" height="64" src={props.imageUrl} />
+      <a href={props.imageUrl} download={props.name}>
+        <img width="64" height="64" src={props.imageUrl} />
+      </a>
       <div>:{props.name}:</div>
       <div>{props.user}</div>
     </div>
