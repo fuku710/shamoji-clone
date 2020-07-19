@@ -3,6 +3,7 @@ import { useState } from "react";
 import { apiClient } from "../api";
 import { RegisterUserForm } from "../components/RegisterUserForm";
 import { Heading } from "../components/common/Heading";
+import { Toast } from "../components/common/Toast";
 
 type vError = {
   field?: string;
@@ -15,6 +16,7 @@ export const UserRegisterContainer: React.FC = () => {
   const [confPassword, setConfPassword] = useState<string>("");
   const [vErrors, setVErrors] = useState<vError[]>([]);
   const [registerError, setRegisterError] = useState<string>(null);
+  const [successMessage, setSuccessMessage] = useState<string>(null);
 
   const validateInput = (): boolean => {
     const errors: vError[] = [];
@@ -51,6 +53,9 @@ export const UserRegisterContainer: React.FC = () => {
     });
     if (response.status !== 201) {
       setRegisterError("ユーザー登録に失敗しました");
+    } else {
+      setSuccessMessage("ユーザ登録に成功しました");
+      setTimeout(() => setSuccessMessage(null), 5000);
     }
   };
 
@@ -78,6 +83,7 @@ export const UserRegisterContainer: React.FC = () => {
         ))}
         <div>{registerError}</div>
       </div>
+      {successMessage && <Toast>{successMessage}</Toast>}
     </>
   );
 };
