@@ -38,10 +38,7 @@ export const reducer: React.Reducer<State, Action> = (state, action) => {
     case "SET_USER_INFO":
       return {
         ...state,
-        user: {
-          ...state.user,
-          user: action.payload
-        },
+        user: action.payload,
       }
     default:
       return state;
