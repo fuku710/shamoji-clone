@@ -3,7 +3,7 @@ import { createContext, Dispatch } from "react";
 type User = {
   id: number;
   username: string;
-}
+};
 
 type State = {
   user: User;
@@ -13,7 +13,7 @@ type State = {
 type Action =
   | { type: "LOGIN"; payload: string }
   | { type: "LOGOUT" }
-  | { type: "SET_USER_INFO"; payload: User }
+  | { type: "SET_USER_INFO"; payload: User };
 
 export const initialState: State = {
   user: null,
@@ -23,13 +23,13 @@ export const initialState: State = {
 export const reducer: React.Reducer<State, Action> = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      persistAccessToken(action.payload)
+      persistAccessToken(action.payload);
       return {
         ...state,
-        accessToken: action.payload
+        accessToken: action.payload,
       };
     case "LOGOUT":
-      removeAccessToken()
+      removeAccessToken();
       return {
         ...state,
         user: null,
@@ -39,23 +39,23 @@ export const reducer: React.Reducer<State, Action> = (state, action) => {
       return {
         ...state,
         user: action.payload,
-      }
+      };
     default:
       return state;
   }
 };
 
 const persistAccessToken = (accessToken: string) => {
-  window.localStorage.setItem('accessToken', accessToken)
-}
+  window.localStorage.setItem("accessToken", accessToken);
+};
 
 const removeAccessToken = () => {
-  window.localStorage.removeItem('accessToken')
-}
+  window.localStorage.removeItem("accessToken");
+};
 
 export type UserStore = {
-  state: State,
-  dispatch: Dispatch<Action>
-}
+  state: State;
+  dispatch: Dispatch<Action>;
+};
 
 export const UserContext = createContext<UserStore>({} as UserStore);

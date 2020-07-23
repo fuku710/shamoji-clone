@@ -18,7 +18,7 @@ export const EmojiRegisterContainer: React.FC = () => {
   const [vErrors, setVErrors] = useState<vError[]>([]);
   const [registerError, setRegisterError] = useState<string>(null);
   const { state } = useContext<UserStore>(UserContext);
-  const history = useHistory()
+  const history = useHistory();
 
   const validateInput = (): boolean => {
     const errors: vError[] = [];
@@ -40,7 +40,7 @@ export const EmojiRegisterContainer: React.FC = () => {
     if (response.status !== 201) {
       setRegisterError("登録に失敗しました");
     } else {
-      history.push('/')
+      history.push("/");
     }
   };
 

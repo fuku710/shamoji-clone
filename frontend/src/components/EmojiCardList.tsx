@@ -25,7 +25,7 @@ export const EmojiCardList: React.FC<EmojiCardListProps> = (props) => {
 const CardList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  > *{
+  > * {
     margin: 8px;
   }
 `;

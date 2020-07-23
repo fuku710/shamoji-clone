@@ -18,7 +18,7 @@ export const UserLoginContainer: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<Error[]>([]);
   const [loginError, setLoginError] = useState<string>(null);
-  const history = useHistory()
+  const history = useHistory();
 
   const login = async () => {
     const response: Response = await apiClient("/auth", "POST", {
@@ -27,7 +27,7 @@ export const UserLoginContainer: React.FC = () => {
     if (response.status === 200) {
       const accessToken: string = (await response.json()).access_token;
       dispatch({ type: "LOGIN", payload: accessToken });
-      history.push('/')
+      history.push("/");
     } else {
       setLoginError("ログインに失敗しました");
     }
