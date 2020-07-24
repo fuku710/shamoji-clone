@@ -1,13 +1,15 @@
 import * as React from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
+import { HeaderMenu } from "./HeaderMenu";
+import { HeaderMenuItem } from "./HeaderMenuItem";
+
 import { UserContext, UserStore } from "../stores/user";
-import { MAIN, WHITE, GRAY_2 } from "./common/Colors";
+import { MAIN, WHITE } from "./common/Colors";
 
 type Props = {
   title: String;
@@ -31,27 +33,17 @@ export const Header: React.FC<Props> = (props) => {
             <span>{state.user.username}</span>
           </UserNameIcon>
         )}
-        <MenuList>
-          {isLoggedIn ? (
-            <>
-              <MenuListItem>
-                <Link to="/emoji/new">絵文字登録</Link>
-              </MenuListItem>
-              <MenuListItem onClick={logout}>
-                <Link to="/">ログアウト</Link>
-              </MenuListItem>
-            </>
-          ) : (
-            <>
-              <MenuListItem>
-                <Link to="/register">ユーザー登録</Link>
-              </MenuListItem>
-              <MenuListItem>
-                <Link to="/login">ログイン</Link>
-              </MenuListItem>
-            </>
-          )}
-        </MenuList>
+        {isLoggedIn ? (
+          <HeaderMenu>
+            <HeaderMenuItem to="/emoji/new" text="絵文字登録" />
+            <HeaderMenuItem onClick={logout} text="ログアウト" />
+          </HeaderMenu>
+        ) : (
+          <HeaderMenu>
+            <HeaderMenuItem to="/register" text="ユーザー登録" />
+            <HeaderMenuItem to="/login" text="ログイン" />
+          </HeaderMenu>
+        )}
       </HeaderContainerItem>
     </HeaderContainer>
   );
@@ -95,50 +87,3 @@ const Title = styled.h1`
     text-decoration: none;
   }
 `;
-
-const MenuList = styled.ul`
-  display: flex;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-`;
-
-const MenuListItem = styled.li`
-  list-style: none;
-  width: 120px;
-  height: 100%;
-  transition: 200ms;
-  cursor: pointer;
-  :hover {
-    background: ${GRAY_2};
-  }
-  a {
-    width: 100%;
-    height: 100%;
-    color: ${WHITE};
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-`;
-
-const titleStyle: React.CSSProperties = {
-  textAlign: "center",
-  fontSize: 32,
-  color: "white",
-  width: 320,
-  height: 64,
-  margin: "16 24 16 0",
-  float: "left",
-};
-
-const usernameStyle: React.CSSProperties = {
-  textAlign: "center",
-  fontSize: 16,
-  color: "white",
-  width: 320,
-  height: 64,
-  margin: "16 24 16 0",
-  float: "left",
-};
