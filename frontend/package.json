@@ -4,7 +4,8 @@
   "description": "Shamoji clone app",
   "scripts": {
     "dev": "APP_ENV=development webpack-dev-server",
-    "build": "APP_ENV=production webpack"
+    "build": "APP_ENV=production webpack",
+    "format": "prettier --write src/**"
   },
   "author": "Fukuda Naoto",
   "license": "MIT",
