@@ -28,19 +28,9 @@ export const RegisterUserForm: React.FC<Props> = (props) => {
   };
   return (
     <Form onSubmit={props.onSubmit}>
-      <InputUsername
-        username={props.username}
-        onChange={handleChangeUsername}
-      />
-      <InputPassword
-        password={props.password}
-        onChange={handleChangePassword}
-      />
-      <InputPassword
-        label="確認用パスワード"
-        password={props.confPassword}
-        onChange={handleChangeConfPassword}
-      />
+      <InputUsername username={props.username} onChange={handleChangeUsername} />
+      <InputPassword password={props.password} onChange={handleChangePassword} />
+      <InputPassword label="確認用パスワード" password={props.confPassword} onChange={handleChangeConfPassword} />
       <Button>登録</Button>
     </Form>
   );

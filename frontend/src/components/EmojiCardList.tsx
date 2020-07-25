@@ -11,12 +11,7 @@ export const EmojiCardList: React.FC<EmojiCardListProps> = (props) => {
   return (
     <CardList>
       {props.emojis.map((emoji) => (
-        <EmojiCard
-          name={emoji.name}
-          user={emoji.user}
-          imageUrl={emoji.dataUrl}
-          key={emoji.id}
-        />
+        <EmojiCard name={emoji.name} user={emoji.user} imageUrl={emoji.dataUrl} key={emoji.id} />
       ))}
     </CardList>
   );

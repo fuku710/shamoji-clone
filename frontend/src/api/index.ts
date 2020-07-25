@@ -1,10 +1,6 @@
 const BASE_URL = "http://localhost:5000";
 
-export const apiClient = async (
-  path: string,
-  method: "GET" | "POST" | "PATCH" | "DELETE",
-  options?: { accessToken?: string; json?: object }
-) => {
+export const apiClient = async (path: string, method: "GET" | "POST" | "PATCH" | "DELETE", options?: { accessToken?: string; json?: object }) => {
   const headers = new Headers();
   if (method == "POST" || method == "PATCH") {
     headers.append("Content-Type", "application/json");

@@ -10,10 +10,7 @@ type State = {
   accessToken: string;
 };
 
-type Action =
-  | { type: "LOGIN"; payload: string }
-  | { type: "LOGOUT" }
-  | { type: "SET_USER_INFO"; payload: User };
+type Action = { type: "LOGIN"; payload: string } | { type: "LOGOUT" } | { type: "SET_USER_INFO"; payload: User };
 
 export const initialState: State = {
   user: null,

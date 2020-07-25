@@ -53,13 +53,7 @@ export const EmojiRegisterContainer: React.FC = () => {
   return (
     <>
       <Heading>絵文字登録</Heading>
-      <RegisterEmojiForm
-        name={name}
-        dataUrl={dataUrl}
-        onChangeName={setName}
-        onChangeDataUrl={setDataUrl}
-        onSubmit={handleSubmitEmojiForm}
-      />
+      <RegisterEmojiForm name={name} dataUrl={dataUrl} onChangeName={setName} onChangeDataUrl={setDataUrl} onSubmit={handleSubmitEmojiForm} />
       <div style={{ color: "red" }}>
         {vErrors.map((vError) => (
           <div key={vError.field}>{vError.message}</div>

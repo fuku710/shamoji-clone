@@ -50,10 +50,7 @@ export const UserLoginContainer: React.FC = () => {
     return errors;
   };
 
-  const handleChangeLoginForm = (input: {
-    username: string;
-    password: string;
-  }) => {
+  const handleChangeLoginForm = (input: { username: string; password: string }) => {
     setUsername(input.username);
     setPassword(input.password);
   };
@@ -71,12 +68,7 @@ export const UserLoginContainer: React.FC = () => {
   return (
     <>
       <Heading>ログイン</Heading>
-      <LoginUserForm
-        username={username}
-        password={password}
-        onChange={handleChangeLoginForm}
-        onSubmit={handleSubmitLoginForm}
-      />
+      <LoginUserForm username={username} password={password} onChange={handleChangeLoginForm} onSubmit={handleSubmitLoginForm} />
       <div style={{ color: "red" }}>{loginError}</div>
       <div style={{ color: "red" }}>
         {errors.map((error) => (

@@ -14,9 +14,7 @@ type Props = {
 export const RegisterEmojiForm: React.FC<Props> = (props) => {
   const handleChangeEmoji = (e: any) => {
     const cropper: Cropper = e.target.cropper;
-    const dataUrl = cropper
-      .getCroppedCanvas({ width: 128, height: 128 })
-      .toDataURL();
+    const dataUrl = cropper.getCroppedCanvas({ width: 128, height: 128 }).toDataURL();
     props.onChangeDataUrl(dataUrl);
   };
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {

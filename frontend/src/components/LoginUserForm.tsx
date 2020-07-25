@@ -22,14 +22,8 @@ export const LoginUserForm: React.FC<Props> = (props) => {
   };
   return (
     <Form onSubmit={props.onSubmit}>
-      <InputUsername
-        username={props.username}
-        onChange={handleChangeUsername}
-      />
-      <InputPassword
-        password={props.password}
-        onChange={handleChangePassword}
-      />
+      <InputUsername username={props.username} onChange={handleChangeUsername} />
+      <InputPassword password={props.password} onChange={handleChangePassword} />
       <Button>ログイン</Button>
     </Form>
   );
